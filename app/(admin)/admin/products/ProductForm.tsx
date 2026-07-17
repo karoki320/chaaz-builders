@@ -6,9 +6,16 @@ import type { Category } from "@/lib/types";
 
 export function ProductForm({ categories }: { categories: Category[] }) {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    name: string;
+    categoryId: string;
+    price: string;
+    stock: string;
+    description: string;
+    icon: string;
+  }>({
     name: "",
-    categoryId: categories[0]?.id ?? "",
+    categoryId: categories[0] ? String(categories[0].id) : "",
     price: "",
     stock: "0",
     description: "",
