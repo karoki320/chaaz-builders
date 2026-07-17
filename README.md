@@ -71,3 +71,4 @@ Still to do, in rough priority order:
 - Resend (or similar) for order confirmation emails
 - Responsive/accessibility pass, SEO metadata per page, sitemap/robots.txt
 - Rate limiting on `/api/checkout` and `/api/contact`
+"# chaaz" 
