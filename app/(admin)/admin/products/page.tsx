@@ -2,6 +2,8 @@ import { getServiceSupabase } from "@/lib/supabase/server";
 import { formatKES } from "@/lib/utils";
 import { ProductForm } from "./ProductForm";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProductsPage() {
   const supabase = getServiceSupabase();
   const [{ data: products }, { data: categories }] = await Promise.all([

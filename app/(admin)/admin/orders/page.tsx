@@ -2,6 +2,8 @@ import { getServiceSupabase } from "@/lib/supabase/server";
 import { formatKES } from "@/lib/utils";
 import { OrderStatusForm } from "./OrderStatusForm";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminOrdersPage() {
   const supabase = getServiceSupabase();
   const { data: orders } = await supabase

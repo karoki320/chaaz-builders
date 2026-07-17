@@ -3,7 +3,7 @@ import { getServiceSupabase } from "@/lib/supabase/server";
 import type { Product } from "@/lib/types";
 import { ProductPageClient } from "./ProductPageClient";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

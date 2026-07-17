@@ -2,7 +2,7 @@ import { getServiceSupabase } from "@/lib/supabase/server";
 import { ProductCard } from "@/components/ProductCard";
 import type { Category, Product } from "@/lib/types";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ShopPage({
   searchParams,

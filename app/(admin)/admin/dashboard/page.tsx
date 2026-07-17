@@ -1,6 +1,8 @@
 import { getServiceSupabase } from "@/lib/supabase/server";
 import { formatKES } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboardPage() {
   const supabase = getServiceSupabase();
   const [{ count: productCount }, { count: orderCount }, { data: recentOrders }, { data: paidOrders }] =
