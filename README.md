@@ -24,7 +24,7 @@ supabase/migrations/  Postgres schema (001_init.sql) + starter categories (002_s
 ## 1. Set up Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Go to **SQL Editor** and run `supabase/migrations/001_init.sql`, then `002_seed.sql`.
+2. Go to **SQL Editor** and run, in order: `001_init.sql`, `002_seed.sql`, `003_blog.sql`.
 3. Go to **Project Settings → API** and copy: Project URL, `anon` public key, `service_role` key.
 4. Go to **Authentication → Users** and create your first admin user (email + password).
 5. In **SQL Editor**, run this to make that user an admin (replace the email):
@@ -59,14 +59,19 @@ npm run dev
 4. Deploy, then update `MPESA_CALLBACK_URL` to the live domain and redeploy.
 5. Point your domain's DNS at Vercel.
 
+## Accessing the admin panel
+
+Go to `/admin/login` on your deployed site (e.g. `https://chaaz-builders.vercel.app/admin/login`). Log in with the email + password you created in **Supabase → Authentication → Users** (the account you ran the `insert into admins ...` SQL for). From there: Dashboard, Products, Orders, Blog.
+
 ## What's built vs. what's left
 
-Done: storefront (home, shop with category filter, product detail, cart, checkout with M-Pesa STK push), order confirmation, contact form, admin login (Supabase Auth), admin dashboard, admin product creation, admin order status updates.
+Done: storefront (home, shop with category filter, product detail, cart, checkout with M-Pesa STK push), blog (public listing + post pages, admin-managed), about page, order confirmation, contact form, admin login (Supabase Auth), admin dashboard, admin product creation, admin order status updates, admin blog post create/publish/delete.
 
 Still to do, in rough priority order:
 - Product edit/delete in admin (currently create-only)
+- Blog post editing (currently create/publish/delete, no edit-in-place yet)
 - Customer-facing order lookup by phone number
-- Image upload for products (Supabase Storage) - currently emoji icons as placeholders
+- Image upload for products/blog (Supabase Storage) - currently emoji icons as placeholders
 - Reconcile M-Pesa callback by `CheckoutRequestID` instead of relying on `AccountReference` alone (Daraja's callback shape needs a live sandbox test to confirm exact field names)
 - Resend (or similar) for order confirmation emails
 - Responsive/accessibility pass, SEO metadata per page, sitemap/robots.txt

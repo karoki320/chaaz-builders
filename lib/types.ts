@@ -40,3 +40,14 @@ export type Order = {
   delivery_address: string | null;
   created_at: string;
 };
+
+export type BlogPost = {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string;
+  cover_icon: string | null;
+  published: boolean;
+  created_at: string;
+};

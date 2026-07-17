@@ -5,10 +5,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Chaaz Builders brand: green wordmark, blue faucet/water accent
         brand: {
-          DEFAULT: "#c2410c",
-          dark: "#9a3412",
-          light: "#fb923c",
+          DEFAULT: "#1B7A3D",
+          dark: "#14532D",
+          light: "#4ADE80",
+        },
+        accent: {
+          DEFAULT: "#1E4E8C",
+          dark: "#123164",
+          light: "#3B82F6",
         },
       },
     },
