@@ -1,58 +1,55 @@
-import Link from "next/link";
 import { getServiceSupabase } from "@/lib/supabase/server";
+import { CategoryCard } from "@/components/CategoryCard";
 import { ProductCard } from "@/components/ProductCard";
+import { Hero } from "@/components/Hero";
+import { WhyChooseUs } from "@/components/WhyChooseUs";
+import { Testimonials } from "@/components/Testimonials";
+import { FAQ } from "@/components/FAQ";
+import { Newsletter } from "@/components/Newsletter";
 import type { Category, Product } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 async function getHomeData() {
   const supabase = getServiceSupabase();
-  const [{ data: categories }, { data: featured }] = await Promise.all([
+  const [{ data: categories }, { data: featured }, { count: productCount }] = await Promise.all([
     supabase.from("categories").select("*").order("name"),
     supabase.from("products").select("*").eq("featured", true).limit(8),
+    supabase.from("products").select("*", { count: "exact", head: true }),
   ]);
   return {
     categories: (categories ?? []) as Category[],
     featured: (featured ?? []) as Product[],
+    productCount: productCount ?? 0,
+    categoryCount: (categories ?? []).length,
   };
 }
 
 export default async function HomePage() {
-  const { categories, featured } = await getHomeData();
+  const { categories, featured, productCount, categoryCount } = await getHomeData();
 
   return (
     <div>
-      <section className="bg-brand-dark text-white">
-        <div className="max-w-6xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3">Everything for your build.</h1>
-          <p className="text-white/80 max-w-xl mx-auto mb-6">
-            Cement, steel, plumbing, paint, tiles and tools - in stock, delivered fast.
-          </p>
-          <Link href="/shop" className="inline-block bg-white text-brand-dark px-6 py-3 rounded-md font-medium">
-            Shop now
-          </Link>
-        </div>
-      </section>
+      <Hero />
 
-      <section className="max-w-6xl mx-auto px-4 py-10">
-        <h2 className="text-lg font-semibold mb-4">Shop by category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-          {categories.map((c) => (
-            <Link
-              key={c.id}
-              href={`/shop?category=${c.slug}`}
-              className="border rounded-lg p-4 text-center hover:shadow-md transition bg-white"
-            >
-              <div className="text-3xl mb-2">{c.icon ?? "📦"}</div>
-              <div className="text-sm font-medium">{c.name}</div>
-            </Link>
+      <section id="categories" className="max-w-6xl mx-auto px-4 py-16">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-brand-dark">Shop by Category</h2>
+          <p className="text-neutral-500 mt-2">Everything for your build, organized for you.</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+          {categories.map((c, i) => (
+            <CategoryCard key={c.id} category={c} index={i} />
           ))}
         </div>
       </section>
 
       {featured.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 py-10">
-          <h2 className="text-lg font-semibold mb-4">Featured products</h2>
+        <section className="max-w-6xl mx-auto px-4 py-16">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-brand-dark">Featured Products</h2>
+            <p className="text-neutral-500 mt-2">Popular picks, in stock and ready to ship.</p>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {featured.map((p) => (
               <ProductCard key={p.id} product={p} />
@@ -60,6 +57,11 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      <WhyChooseUs productCount={productCount} categoryCount={categoryCount} />
+      <Testimonials />
+      <FAQ />
+      <Newsletter />
     </div>
   );
 }

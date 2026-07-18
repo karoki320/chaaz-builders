@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { Product } from "@/lib/types";
 import { formatKES } from "@/lib/utils";
 import { productWhatsappLink } from "@/lib/whatsapp";
@@ -24,8 +25,16 @@ export function ProductPageClient({ product }: { product: Product }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 grid md:grid-cols-2 gap-8">
-      <div className="bg-neutral-100 rounded-lg flex items-center justify-center h-72 text-7xl overflow-hidden">
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <p className="text-xs text-neutral-500 mb-6">
+        <Link href="/" className="hover:text-brand">Home</Link>
+        <span className="mx-1.5">/</span>
+        <Link href="/shop" className="hover:text-brand">Shop</Link>
+        <span className="mx-1.5">/</span>
+        <span className="text-neutral-700">{product.name}</span>
+      </p>
+      <div className="grid md:grid-cols-2 gap-8">
+      <div className="bg-neutral-100 rounded-xl3 flex items-center justify-center h-72 text-7xl overflow-hidden">
         {product.image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
@@ -81,6 +90,7 @@ export function ProductPageClient({ product }: { product: Product }) {
         >
           Ask about this on WhatsApp
         </a>
+      </div>
       </div>
     </div>
   );

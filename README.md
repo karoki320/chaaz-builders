@@ -24,7 +24,7 @@ supabase/migrations/  Postgres schema (001_init.sql) + starter categories (002_s
 ## 1. Set up Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Go to **SQL Editor** and run, in order: `001_init.sql`, `002_seed.sql`, `003_blog.sql`, `004_media.sql` (the last one creates the public `media` storage bucket used for product/blog photo uploads).
+2. Go to **SQL Editor** and run, in order: `001_init.sql`, `002_seed.sql`, `003_blog.sql`, `004_media.sql` (creates the public `media` storage bucket for photo uploads), `005_newsletter.sql` (newsletter signups).
 3. Go to **Project Settings → API** and copy: Project URL, `anon` public key, `service_role` key.
 4. Go to **Authentication → Users** and create your first admin user (email + password).
 5. In **SQL Editor**, run this to make that user an admin (replace the email):
@@ -66,6 +66,10 @@ Go to `/admin/login` on your deployed site (e.g. `https://chaaz-builders.vercel.
 ## What's built vs. what's left
 
 Done: storefront (home, shop with category filter, product detail, cart, checkout with M-Pesa STK push), blog (public listing + post pages, admin-managed), about page, order confirmation, contact form, admin login (Supabase Auth), admin dashboard, admin product creation, admin order status updates, admin blog post create/publish/delete.
+
+**Important before launch:** `components/Testimonials.tsx` currently holds sample placeholder quotes, clearly marked in the file. Replace them with real customer feedback (or remove the section) before this goes live - showing fabricated reviews to real customers is a trust and legal risk. The homepage "showcase" visuals are CSS/Framer Motion glass-and-glow compositions, not literal 3D product photography; swap in real product photos (via the new upload feature) wherever you want maximum realism.
+
+`npm install` is required after pulling these changes - `framer-motion` was added as a new dependency.
 
 Still to do, in rough priority order:
 - Product edit/delete in admin (currently create-only)
