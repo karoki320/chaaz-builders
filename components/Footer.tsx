@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="bg-navy-gradient text-white/80 mt-16">
       <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-4 gap-10">
         <div className="md:col-span-2">
-          <Logo dark />
+          <Logo full />
           <p className="text-sm mt-4 max-w-xs text-white/60">
             Quality plumbing and building materials, stocked and delivered fast across Kenya.
           </p>
