@@ -12,7 +12,7 @@ export default async function AdminBlogPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold mb-6">Blog</h1>
+      <h1 className="text-xl font-semibold mb-6 hidden md:block">Blog</h1>
 
       <div className="border rounded-lg p-4 bg-white mb-8">
         <h2 className="font-medium mb-3">New post</h2>

@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import type { BlogPost } from "@/lib/types";
 
 export function BlogPostRow({ post }: { post: BlogPost }) {
@@ -32,26 +33,33 @@ export function BlogPostRow({ post }: { post: BlogPost }) {
   if (deleted) return null;
 
   return (
-    <div className="border rounded-lg p-4 bg-white flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded bg-neutral-100 flex items-center justify-center overflow-hidden shrink-0">
+    <div className="border rounded-lg p-4 bg-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="flex items-center gap-3 min-w-0">
+        <div className="relative w-10 h-10 rounded bg-neutral-100 flex items-center justify-center overflow-hidden shrink-0">
           {post.cover_image_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover" />
+            <Image src={post.cover_image_url} alt={post.title} fill sizes="40px" className="object-cover" />
           ) : (
             <span>{post.cover_icon ?? "📝"}</span>
           )}
         </div>
-        <div>
-          <p className="font-medium">{post.title}</p>
+        <div className="min-w-0">
+          <p className="font-medium truncate">{post.title}</p>
           <p className="text-sm text-neutral-500">{post.published ? "Published" : "Draft"}</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <button onClick={togglePublish} disabled={isPending} className="text-sm border rounded px-3 py-1">
+      <div className="flex items-center gap-2 shrink-0">
+        <button
+          onClick={togglePublish}
+          disabled={isPending}
+          className="flex-1 sm:flex-none text-sm border rounded px-3 min-h-[40px]"
+        >
           {post.published ? "Unpublish" : "Publish"}
         </button>
-        <button onClick={handleDelete} disabled={isPending} className="text-sm text-red-600">
+        <button
+          onClick={handleDelete}
+          disabled={isPending}
+          className="text-sm text-red-600 px-3 min-h-[40px]"
+        >
           Delete
         </button>
       </div>
