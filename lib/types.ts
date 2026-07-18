@@ -15,6 +15,7 @@ export type Product = {
   stock: number;
   description: string | null;
   icon: string | null;
+  image_url: string | null;
   images: string[];
   specifications: Record<string, string>;
   featured: boolean;
@@ -48,6 +49,7 @@ export type BlogPost = {
   excerpt: string | null;
   content: string;
   cover_icon: string | null;
+  cover_image_url: string | null;
   published: boolean;
   created_at: string;
 };

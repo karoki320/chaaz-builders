@@ -17,7 +17,7 @@ export function ProductPageClient({ product }: { product: Product }) {
       name: product.name,
       price: parseFloat(product.price),
       quantity,
-      image: product.images?.[0],
+      image: product.image_url ?? undefined,
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
@@ -25,8 +25,13 @@ export function ProductPageClient({ product }: { product: Product }) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 grid md:grid-cols-2 gap-8">
-      <div className="bg-neutral-100 rounded-lg flex items-center justify-center h-72 text-7xl">
-        {product.icon ?? "🧱"}
+      <div className="bg-neutral-100 rounded-lg flex items-center justify-center h-72 text-7xl overflow-hidden">
+        {product.image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+        ) : (
+          product.icon ?? "🧱"
+        )}
       </div>
 
       <div>

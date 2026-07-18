@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     price: body.price,
     stock: parseInt(body.stock) || 0,
     description: body.description || null,
-    icon: body.icon || null,
+    image_url: body.imageUrl || null,
   });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

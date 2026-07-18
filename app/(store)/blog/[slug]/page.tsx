@@ -19,7 +19,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article className="max-w-2xl mx-auto px-4 py-10">
-      <div className="text-4xl mb-3">{post.cover_icon ?? "📝"}</div>
+      {post.cover_image_url ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={post.cover_image_url} alt={post.title} className="w-full h-56 object-cover rounded-lg mb-4" />
+      ) : (
+        <div className="text-4xl mb-3">{post.cover_icon ?? "📝"}</div>
+      )}
       <h1 className="text-2xl font-bold">{post.title}</h1>
       <p className="text-xs text-neutral-400 mt-1 mb-6">
         {new Date(post.created_at).toLocaleDateString("en-KE", { year: "numeric", month: "long", day: "numeric" })}

@@ -25,14 +25,23 @@ export default async function BlogPage() {
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
-              className="border rounded-lg p-5 bg-white hover:shadow-md transition"
+              className="border rounded-lg overflow-hidden bg-white hover:shadow-md transition"
             >
-              <div className="text-3xl mb-2">{post.cover_icon ?? "📝"}</div>
-              <h2 className="font-semibold">{post.title}</h2>
-              {post.excerpt && <p className="text-sm text-neutral-500 mt-1 line-clamp-2">{post.excerpt}</p>}
-              <p className="text-xs text-neutral-400 mt-2">
-                {new Date(post.created_at).toLocaleDateString("en-KE", { year: "numeric", month: "long", day: "numeric" })}
-              </p>
+              <div className="h-36 bg-neutral-100 flex items-center justify-center">
+                {post.cover_image_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-3xl">{post.cover_icon ?? "📝"}</span>
+                )}
+              </div>
+              <div className="p-5">
+                <h2 className="font-semibold">{post.title}</h2>
+                {post.excerpt && <p className="text-sm text-neutral-500 mt-1 line-clamp-2">{post.excerpt}</p>}
+                <p className="text-xs text-neutral-400 mt-2">
+                  {new Date(post.created_at).toLocaleDateString("en-KE", { year: "numeric", month: "long", day: "numeric" })}
+                </p>
+              </div>
             </Link>
           ))}
         </div>

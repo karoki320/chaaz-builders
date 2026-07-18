@@ -24,7 +24,7 @@ supabase/migrations/  Postgres schema (001_init.sql) + starter categories (002_s
 ## 1. Set up Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Go to **SQL Editor** and run, in order: `001_init.sql`, `002_seed.sql`, `003_blog.sql`.
+2. Go to **SQL Editor** and run, in order: `001_init.sql`, `002_seed.sql`, `003_blog.sql`, `004_media.sql` (the last one creates the public `media` storage bucket used for product/blog photo uploads).
 3. Go to **Project Settings → API** and copy: Project URL, `anon` public key, `service_role` key.
 4. Go to **Authentication → Users** and create your first admin user (email + password).
 5. In **SQL Editor**, run this to make that user an admin (replace the email):
@@ -71,7 +71,7 @@ Still to do, in rough priority order:
 - Product edit/delete in admin (currently create-only)
 - Blog post editing (currently create/publish/delete, no edit-in-place yet)
 - Customer-facing order lookup by phone number
-- Image upload for products/blog (Supabase Storage) - currently emoji icons as placeholders
+- Multiple photos per product (currently one cover image each for products/blog)
 - Reconcile M-Pesa callback by `CheckoutRequestID` instead of relying on `AccountReference` alone (Daraja's callback shape needs a live sandbox test to confirm exact field names)
 - Resend (or similar) for order confirmation emails
 - Responsive/accessibility pass, SEO metadata per page, sitemap/robots.txt

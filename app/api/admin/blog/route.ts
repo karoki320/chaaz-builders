@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     slug: `${slugify(body.title)}-${Date.now().toString(36)}`,
     excerpt: body.excerpt || null,
     content: body.content,
-    cover_icon: body.coverIcon || "📝",
+    cover_image_url: body.coverImageUrl || null,
     published: false,
   });
 
