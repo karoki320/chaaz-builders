@@ -23,11 +23,14 @@ export default function CartPage() {
   const total = subtotal + DELIVERY_FEE;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 py-6 sm:py-8">
       <h1 className="text-xl font-semibold mb-6">Your Cart</h1>
       <div className="space-y-4">
         {items.map((item) => (
-          <div key={item.productId} className="flex items-center justify-between border-b pb-4">
+          <div
+            key={item.productId}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b pb-4"
+          >
             <div>
               <p className="font-medium">{item.name}</p>
               <p className="text-sm text-neutral-500">{formatKES(item.price)} each</p>
@@ -38,9 +41,12 @@ export default function CartPage() {
                 min={1}
                 value={item.quantity}
                 onChange={(e) => updateQuantity(item.productId, parseInt(e.target.value) || 1)}
-                className="w-14 border rounded px-2 py-1 text-center"
+                className="w-16 border rounded px-2 py-2.5 text-center"
               />
-              <button onClick={() => removeItem(item.productId)} className="text-red-600 text-sm">
+              <button
+                onClick={() => removeItem(item.productId)}
+                className="text-red-600 text-sm min-h-[44px] px-2"
+              >
                 Remove
               </button>
             </div>
@@ -65,7 +71,7 @@ export default function CartPage() {
 
       <Link
         href="/checkout"
-        className="mt-6 block text-center bg-brand text-white py-3 rounded-md font-medium"
+        className="mt-6 block text-center bg-brand-gradient text-white py-3.5 rounded-full font-semibold"
       >
         Proceed to checkout
       </Link>

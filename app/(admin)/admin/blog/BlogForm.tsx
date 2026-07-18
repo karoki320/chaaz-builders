@@ -46,7 +46,7 @@ export function BlogForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-3">
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <input
         required
         placeholder="Title"

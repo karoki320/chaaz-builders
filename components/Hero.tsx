@@ -54,7 +54,7 @@ export function Hero() {
   const slide = slides[index];
 
   return (
-    <section className="relative overflow-hidden h-[560px] md:h-[640px]">
+    <section className="relative overflow-hidden h-[520px] sm:h-[560px] md:h-[640px]">
       <AnimatePresence mode="sync">
         <motion.div
           key={slide.image}
@@ -72,7 +72,8 @@ export function Hero() {
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent md:from-white md:via-white/60 md:to-transparent" />
+          <div className="absolute inset-0 bg-white/80 sm:hidden" />
+          <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-white via-white/70 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
@@ -93,16 +94,16 @@ export function Hero() {
             </h1>
             <p className="mt-5 text-neutral-600 text-lg max-w-md">{slide.subheading}</p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
               <Link
                 href={slide.ctaHref}
-                className="rounded-full bg-brand-gradient text-white px-8 py-3.5 font-semibold shadow-glow transition-transform hover:scale-105"
+                className="text-center rounded-full bg-brand-gradient text-white px-8 py-3.5 font-semibold shadow-glow transition-transform active:scale-95 sm:hover:scale-105"
               >
                 {slide.ctaLabel}
               </Link>
               <Link
                 href="#categories"
-                className="rounded-full bg-white/80 border border-brand/20 px-8 py-3.5 font-semibold text-brand-dark backdrop-blur transition-transform hover:scale-105"
+                className="text-center rounded-full bg-white/80 border border-brand/20 px-8 py-3.5 font-semibold text-brand-dark backdrop-blur transition-transform active:scale-95 sm:hover:scale-105"
               >
                 Browse Categories
               </Link>

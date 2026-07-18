@@ -6,6 +6,25 @@ body {
   @apply text-neutral-900 bg-surface;
 }
 
+/* Prevent iOS Safari from auto-zooming when a form field is focused -
+   any input/select/textarea under 16px triggers it. */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+@media (min-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: inherit;
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 @layer utilities {
   .text-gradient-brand {
     background: linear-gradient(135deg, #1246C7 0%, #1FA84A 100%);

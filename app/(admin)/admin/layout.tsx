@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const links = [
-  { href: "/admin/dashboard", label: "Dashboard" },
-  { href: "/admin/products", label: "Products" },
-  { href: "/admin/orders", label: "Orders" },
-  { href: "/admin/blog", label: "Blog" },
+  { href: "/admin/dashboard", label: "Dashboard", icon: "📊" },
+  { href: "/admin/products", label: "Products", icon: "🧱" },
+  { href: "/admin/orders", label: "Orders", icon: "🧾" },
+  { href: "/admin/blog", label: "Blog", icon: "📝" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -20,7 +20,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           ))}
         </nav>
       </aside>
-      <main className="flex-1 p-6">{children}</main>
+
+      <main className="flex-1 p-4 sm:p-6 pb-20 md:pb-6">{children}</main>
+
+      {/* Mobile bottom tab bar - sidebar is md:block only */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t flex">
+        {links.map((l) => (
+          <Link
+            key={l.href}
+            href={l.href}
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 min-h-[56px] text-xs text-neutral-600"
+          >
+            <span className="text-lg">{l.icon}</span>
+            {l.label}
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 }
