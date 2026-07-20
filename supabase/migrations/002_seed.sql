@@ -1,5 +1,5 @@
 insert into categories (name, slug, icon, description) values
-  ('Cement', 'cement', '🪨', 'Cement and concrete materials'),
+  ('Irrigation Tools', 'irrigation-tools', '💧', 'Irrigation pipes, sprinklers, and watering tools'),
   ('Steel', 'steel', '🔩', 'Steel and iron products'),
   ('Plumbing', 'plumbing', '🚿', 'Plumbing fixtures and pipes'),
   ('Bathroom', 'bathroom', '🛁', 'Bathroom fittings and accessories'),
