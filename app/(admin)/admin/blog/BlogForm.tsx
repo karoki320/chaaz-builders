@@ -50,12 +50,12 @@ export function BlogForm() {
       <input
         required
         placeholder="Title"
-        className="border rounded px-3 py-2 col-span-2"
+        className="border rounded px-3 py-2 sm:col-span-2"
         value={form.title}
         onChange={(e) => setForm({ ...form, title: e.target.value })}
       />
 
-      <div className="col-span-2 flex items-center gap-3">
+      <div className="sm:col-span-2 flex items-center gap-3">
         <input type="file" accept="image/*" onChange={handleFileChange} className="text-sm" />
         {imagePreview && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -65,7 +65,7 @@ export function BlogForm() {
 
       <input
         placeholder="Short excerpt (optional)"
-        className="border rounded px-3 py-2 col-span-2"
+        className="border rounded px-3 py-2 sm:col-span-2"
         value={form.excerpt}
         onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
       />
@@ -73,17 +73,17 @@ export function BlogForm() {
         required
         placeholder="Post content"
         rows={6}
-        className="border rounded px-3 py-2 col-span-2"
+        className="border rounded px-3 py-2 sm:col-span-2"
         value={form.content}
         onChange={(e) => setForm({ ...form, content: e.target.value })}
       />
 
-      {uploadError && <p className="text-red-600 text-sm col-span-2">{uploadError}</p>}
+      {uploadError && <p className="text-red-600 text-sm sm:col-span-2">{uploadError}</p>}
 
       <button
         type="submit"
         disabled={submitting}
-        className="col-span-2 bg-brand text-white py-2 rounded-md font-medium"
+        className="sm:col-span-2 bg-brand text-white py-2 rounded-md font-medium"
       >
         {submitting ? "Saving..." : "Save as draft"}
       </button>

@@ -4,26 +4,34 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Category } from "@/lib/types";
 import { uploadMediaFile } from "@/lib/supabase/storage";
+import { slugify } from "@/lib/utils";
 
 export function ProductForm({ categories }: { categories: Category[] }) {
   const router = useRouter();
   const [form, setForm] = useState<{
     name: string;
+    slug: string;
     categoryId: string;
     price: string;
     stock: string;
     description: string;
   }>({
     name: "",
+    slug: "",
     categoryId: categories[0] ? String(categories[0].id) : "",
     price: "",
     stock: "0",
     description: "",
   });
+  const [slugTouched, setSlugTouched] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+
+  function handleNameChange(name: string) {
+    setForm((f) => ({ ...f, name, slug: slugTouched ? f.slug : slugify(name) }));
+  }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null;
@@ -41,13 +49,16 @@ export function ProductForm({ categories }: { categories: Category[] }) {
         imageUrl = await uploadMediaFile(imageFile, "products");
       }
 
-      await fetch("/api/admin/products", {
+      const res = await fetch("/api/admin/products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, imageUrl }),
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Failed to save product");
 
-      setForm({ ...form, name: "", price: "", stock: "0", description: "" });
+      setForm({ name: "", slug: "", categoryId: form.categoryId, price: "", stock: "0", description: "" });
+      setSlugTouched(false);
       setImageFile(null);
       setImagePreview(null);
       router.refresh();
@@ -65,7 +76,7 @@ export function ProductForm({ categories }: { categories: Category[] }) {
         placeholder="Name"
         className="border rounded px-3 py-2"
         value={form.name}
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
+        onChange={(e) => handleNameChange(e.target.value)}
       />
       <select
         className="border rounded px-3 py-2"
@@ -78,6 +89,23 @@ export function ProductForm({ categories }: { categories: Category[] }) {
           </option>
         ))}
       </select>
+
+      <div className="sm:col-span-2">
+        <input
+          placeholder="URL slug (auto-generated from name)"
+          className="border rounded px-3 py-2 w-full"
+          value={form.slug}
+          onChange={(e) => {
+            setSlugTouched(true);
+            setForm({ ...form, slug: e.target.value });
+          }}
+          onBlur={(e) => setForm({ ...form, slug: slugify(e.target.value) })}
+        />
+        <p className="text-xs text-neutral-400 mt-1">
+          /shop/{form.slug || slugify(form.name) || "your-product-slug"}
+        </p>
+      </div>
+
       <input
         required
         type="number"
@@ -94,7 +122,7 @@ export function ProductForm({ categories }: { categories: Category[] }) {
         onChange={(e) => setForm({ ...form, stock: e.target.value })}
       />
 
-      <div className="col-span-2 flex items-center gap-3">
+      <div className="sm:col-span-2 flex items-center gap-3">
         <input type="file" accept="image/*" onChange={handleFileChange} className="text-sm" />
         {imagePreview && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -104,17 +132,17 @@ export function ProductForm({ categories }: { categories: Category[] }) {
 
       <textarea
         placeholder="Description"
-        className="border rounded px-3 py-2 col-span-2"
+        className="border rounded px-3 py-2 sm:col-span-2"
         value={form.description}
         onChange={(e) => setForm({ ...form, description: e.target.value })}
       />
 
-      {uploadError && <p className="text-red-600 text-sm col-span-2">{uploadError}</p>}
+      {uploadError && <p className="text-red-600 text-sm sm:col-span-2">{uploadError}</p>}
 
       <button
         type="submit"
         disabled={submitting}
-        className="col-span-2 bg-brand text-white py-2 rounded-md font-medium"
+        className="sm:col-span-2 bg-brand text-white py-2.5 rounded-md font-medium disabled:opacity-50"
       >
         {submitting ? "Saving..." : "Add product"}
       </button>
