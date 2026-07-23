@@ -4,8 +4,10 @@ import { AdminMobileNav } from "./AdminMobileNav";
 const links = [
   { href: "/admin/dashboard", label: "Dashboard", icon: "📊" },
   { href: "/admin/products", label: "Products", icon: "🧱" },
+  { href: "/admin/categories", label: "Categories", icon: "🗂️" },
   { href: "/admin/orders", label: "Orders", icon: "🧾" },
   { href: "/admin/blog", label: "Blog", icon: "📝" },
+  { href: "/admin/messages", label: "Messages", icon: "💬" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -11,6 +11,15 @@ export function slugify(input: string) {
     .replace(/(^-|-$)/g, "");
 }
 
+// Normalizes a Kenyan phone number (e.g. "0741 164235" or "+254741164235")
+// into the digits-only international format wa.me links expect.
+export function toWhatsAppNumber(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.startsWith("254")) return digits;
+  if (digits.startsWith("0")) return `254${digits.slice(1)}`;
+  return digits;
+}
+
 export function generateOrderNumber() {
   const date = new Date();
   const stamp = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}`;
