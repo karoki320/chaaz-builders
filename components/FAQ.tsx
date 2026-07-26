@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const faqs = [
   { q: "How fast is delivery?", a: "Most in-stock orders in Nairobi and Thika are delivered the same day. Upcountry orders typically take 1-3 days." },
-  { q: "How do I pay?", a: "Pay securely via M-Pesa at checkout - you'll get an STK push prompt on your phone." },
+  { q: "How do I pay?", a: "Checkout sends your order straight to our WhatsApp with all the details - we'll confirm payment (M-Pesa Till/Paybill or cash on delivery) with you there." },
   { q: "Can I order by WhatsApp instead?", a: "Yes - every product has a WhatsApp button, or message us directly using the floating chat button." },
   { q: "Do you offer installation?", a: "Select products list installation availability on their product page - ask our team for details." },
 ];

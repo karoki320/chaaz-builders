@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceSupabase } from "@/lib/supabase/server";
-import { triggerMpesaStkPush } from "@/lib/mpesa";
 import { generateOrderNumber } from "@/lib/utils";
 
 type CartItemInput = {
@@ -61,6 +60,7 @@ export async function POST(req: NextRequest) {
         delivery_address: customer.address,
         status: "pending",
         payment_status: "unpaid",
+        payment_method: "whatsapp",
       })
       .select("id")
       .single();
@@ -76,18 +76,9 @@ export async function POST(req: NextRequest) {
     const { error: itemsError } = await supabase.from("order_items").insert(orderItemsPayload);
     if (itemsError) throw itemsError;
 
-    // Fire the M-Pesa STK push. If this fails, the order still exists as
-    // "unpaid" and the customer can be nudged to retry from the admin panel.
-    try {
-      await triggerMpesaStkPush({
-        phoneNumber: customer.phone,
-        amount: total,
-        orderNumber,
-      });
-    } catch (mpesaError) {
-      console.error("[M-Pesa] STK push failed:", mpesaError);
-    }
-
+    // Payment now happens over WhatsApp (Daraja/M-Pesa STK push disabled) -
+    // the client-side checkout form builds the wa.me link with the full
+    // order recap once this route returns.
     return NextResponse.json({ orderId: order.id, orderNumber });
   } catch (error) {
     console.error("[Checkout] Failed:", error);

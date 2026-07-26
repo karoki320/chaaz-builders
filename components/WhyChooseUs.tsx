@@ -5,7 +5,7 @@ import { AnimatedCounter } from "@/components/AnimatedCounter";
 
 const features = [
   { icon: "🚚", title: "Fast Delivery", desc: "Same-day dispatch on in-stock orders across Kenya." },
-  { icon: "🔒", title: "Secure Payments", desc: "Pay safely via M-Pesa, straight to our verified line." },
+  { icon: "🔒", title: "Secure Payments", desc: "Confirm and pay directly with our team on WhatsApp." },
   { icon: "✅", title: "Quality Products", desc: "Genuine materials from trusted manufacturers only." },
   { icon: "🎧", title: "Customer Support", desc: "Real people on WhatsApp and phone, every working day." },
 ];

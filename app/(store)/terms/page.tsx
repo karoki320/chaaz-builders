@@ -4,8 +4,8 @@ export default function TermsPage() {
       <h1>Terms of Service</h1>
       <p>
         By placing an order with Chaaz Builders you agree to pay the listed price plus delivery
-        fee via M-Pesa. Stock levels are updated regularly but availability is not guaranteed
-        until an order is confirmed.
+        fee, confirmed and arranged via WhatsApp. Stock levels are updated regularly but
+        availability is not guaranteed until an order is confirmed.
       </p>
     </div>
   );

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
 import { formatKES } from "@/lib/utils";
+import { orderDetailsWhatsappLink } from "@/lib/whatsapp";
 
 const DELIVERY_FEE = 300;
 
@@ -29,7 +30,22 @@ export function CheckoutClient() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Checkout failed");
 
+      // Build the full order recap (customer info + itemized basket) and
+      // send the customer straight to WhatsApp to complete the sale, since
+      // payments now happen there instead of via M-Pesa STK push.
+      const waLink = orderDetailsWhatsappLink({
+        orderNumber: data.orderNumber,
+        name: form.name,
+        phone: form.phone,
+        address: form.address,
+        items: items.map((i) => ({ name: i.name, price: i.price, quantity: i.quantity })),
+        subtotal,
+        deliveryFee: DELIVERY_FEE,
+        total,
+      });
+
       clear();
+      window.open(waLink, "_blank");
       router.push(`/order-confirmation/${data.orderId}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -55,7 +71,7 @@ export function CheckoutClient() {
         />
         <input
           required
-          placeholder="M-Pesa phone (2547XXXXXXXX)"
+          placeholder="Phone number (07XXXXXXXX)"
           className="w-full border rounded px-3 py-2"
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
@@ -89,8 +105,11 @@ export function CheckoutClient() {
           disabled={submitting}
           className="w-full bg-brand text-white py-3 rounded-md font-medium disabled:opacity-50"
         >
-          {submitting ? "Sending M-Pesa prompt..." : "Pay with M-Pesa"}
+          {submitting ? "Sending order..." : "Send Order via WhatsApp"}
         </button>
+        <p className="text-xs text-neutral-500 text-center">
+          You&apos;ll be taken to WhatsApp to confirm your order and arrange payment.
+        </p>
       </form>
     </div>
   );
