@@ -12,7 +12,7 @@ export function CategoryRow({ category }: { category: Category }) {
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: category.name,
-    icon: category.icon ?? "📦",
+    icon: category.icon ?? "",
     description: category.description ?? "",
   });
 

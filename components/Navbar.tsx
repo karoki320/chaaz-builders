@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { Logo } from "@/components/Logo";
+import { CategoryIcon, Icon } from "@/components/Icon";
 import type { Category } from "@/lib/types";
 
 const PHONE_DISPLAY = "0741 164235";
@@ -33,7 +34,7 @@ export function Navbar({ categories }: { categories: Category[] }) {
               onMouseLeave={() => setMegaOpen(false)}
             >
               <button className="flex items-center gap-1">
-                Shop <span className="text-xs">▾</span>
+                Shop <Icon name="chevron-down" size={14} />
               </button>
               {megaOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-[520px]">
@@ -44,7 +45,7 @@ export function Navbar({ categories }: { categories: Category[] }) {
                         href={`/shop?category=${c.slug}`}
                         className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-white/70 transition"
                       >
-                        <span>{c.icon}</span>
+                        <CategoryIcon slug={c.slug} size={16} className="text-brand" />
                         <span>{c.name}</span>
                       </Link>
                     ))}
@@ -70,16 +71,16 @@ export function Navbar({ categories }: { categories: Category[] }) {
           <div className="flex items-center gap-1 sm:gap-2">
             <a
               href={`tel:${PHONE_TEL}`}
-              className="hidden sm:flex items-center min-h-[44px] px-2 text-sm text-accent font-semibold"
+              className="hidden sm:flex items-center gap-1.5 min-h-[44px] px-2 text-sm text-accent font-semibold"
             >
-              📞 {PHONE_DISPLAY}
+              <Icon name="phone" size={16} /> {PHONE_DISPLAY}
             </a>
             <Link
               href="/wishlist"
               className="relative flex items-center justify-center min-w-[44px] min-h-[44px] text-lg"
               aria-label="Wishlist"
             >
-              ♡
+              <Icon name="heart" size={22} />
               {ids.length > 0 && (
                 <span className="absolute top-1 right-1 bg-brand-gradient text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {ids.length}
@@ -91,7 +92,7 @@ export function Navbar({ categories }: { categories: Category[] }) {
               className="relative flex items-center justify-center min-w-[44px] min-h-[44px] text-lg text-brand-dark"
               aria-label="Cart"
             >
-              🛒
+              <Icon name="cart" size={22} />
               {count > 0 && (
                 <span className="absolute top-1 right-1 bg-brand-gradient text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {count}
@@ -104,7 +105,7 @@ export function Navbar({ categories }: { categories: Category[] }) {
               aria-label="Menu"
               aria-expanded={menuOpen}
             >
-              {menuOpen ? "✕" : "☰"}
+              <Icon name={menuOpen ? "close" : "menu"} size={24} />
             </button>
           </div>
         </div>
@@ -138,7 +139,7 @@ export function Navbar({ categories }: { categories: Category[] }) {
                       onClick={() => setMenuOpen(false)}
                       className="min-h-[40px] flex items-center gap-2 text-sm text-neutral-600"
                     >
-                      <span>{c.icon}</span> {c.name}
+                      <CategoryIcon slug={c.slug} size={16} className="text-brand" /> {c.name}
                     </Link>
                   ))}
                 </div>
@@ -151,8 +152,8 @@ export function Navbar({ categories }: { categories: Category[] }) {
                 <Link href="/contact" onClick={() => setMenuOpen(false)} className="min-h-[44px] flex items-center font-medium">
                   Contact
                 </Link>
-                <a href={`tel:${PHONE_TEL}`} className="min-h-[44px] flex items-center font-medium text-accent">
-                  📞 {PHONE_DISPLAY}
+                <a href={`tel:${PHONE_TEL}`} className="min-h-[44px] flex items-center gap-2 font-medium text-accent">
+                  <Icon name="phone" size={16} /> {PHONE_DISPLAY}
                 </a>
               </div>
             </motion.div>

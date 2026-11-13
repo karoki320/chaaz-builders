@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export function CategoryForm() {
   const router = useRouter();
-  const [form, setForm] = useState({ name: "", icon: "📦", description: "" });
+  const [form, setForm] = useState({ name: "", icon: "", description: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,7 +21,7 @@ export function CategoryForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Failed to add category");
-      setForm({ name: "", icon: "📦", description: "" });
+      setForm({ name: "", icon: "", description: "" });
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");

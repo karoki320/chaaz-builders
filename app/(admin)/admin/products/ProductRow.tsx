@@ -6,6 +6,7 @@ import Image from "next/image";
 import type { Category, Product } from "@/lib/types";
 import { formatKES, slugify } from "@/lib/utils";
 import { uploadMediaFile } from "@/lib/supabase/storage";
+import { Icon } from "@/components/Icon";
 
 export function ProductRow({ product, categories }: { product: Product; categories: Category[] }) {
   const router = useRouter();
@@ -163,7 +164,7 @@ export function ProductRow({ product, categories }: { product: Product; categori
           {product.image_url ? (
             <Image src={product.image_url} alt={product.name} fill sizes="48px" className="object-cover" />
           ) : (
-            <span className="text-xl">{product.icon ?? "🧱"}</span>
+            <Icon name="box" size={22} className="text-neutral-400" />
           )}
         </div>
         <div className="min-w-0">

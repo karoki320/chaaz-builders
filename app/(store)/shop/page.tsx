@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import { ProductCard } from "@/components/ProductCard";
 import type { Category, Product } from "@/lib/types";
+import { CategoryIcon } from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -49,9 +50,9 @@ export default async function ShopPage({
           <Link
             key={c.id}
             href={`/shop?category=${c.slug}`}
-            className={`px-4 py-1.5 rounded-full border transition-colors ${category === c.slug ? "bg-brand-gradient text-white border-transparent" : "bg-white text-neutral-700"}`}
+            className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border transition-colors ${category === c.slug ? "bg-brand-gradient text-white border-transparent" : "bg-white text-neutral-700"}`}
           >
-            {c.icon} {c.name}
+            <CategoryIcon slug={c.slug} size={16} /> {c.name}
           </Link>
         ))}
       </div>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import type { BlogPost } from "@/lib/types";
+import { Icon } from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +39,7 @@ export default async function BlogPage() {
                     className="object-cover"
                   />
                 ) : (
-                  <span className="text-3xl">{post.cover_icon ?? "📝"}</span>
+                  <Icon name="document" size={36} className="text-neutral-300" />
                 )}
               </div>
               <div className="p-5">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { formatKES } from "@/lib/utils";
 import { OrderStatusForm } from "./OrderStatusForm";
+import { Icon } from "@/components/Icon";
 
 type OrderItem = { product_name: string; quantity: number; unit_price: string };
 
@@ -29,7 +30,7 @@ export function OrderRow({ order }: { order: Order }) {
       >
         <div className="min-w-0">
           <p className="font-medium">
-            {order.order_number} <span className="text-neutral-400 font-normal">{open ? "▾" : "▸"}</span>
+            {order.order_number} <Icon name="chevron-down" size={14} className={`inline text-neutral-400 transition-transform ${open ? "" : "-rotate-90"}`} />
           </p>
           <p className="text-sm text-neutral-500 truncate">
             {order.customers?.name} - {order.customers?.phone}

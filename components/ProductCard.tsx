@@ -7,6 +7,7 @@ import type { Product } from "@/lib/types";
 import { formatKES } from "@/lib/utils";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
+import { Icon } from "@/components/Icon";
 
 export function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
@@ -48,7 +49,7 @@ export function ProductCard({ product }: { product: Product }) {
               className="object-cover"
             />
           ) : (
-            <span className="text-5xl">{product.icon ?? "🧱"}</span>
+            <Icon name="box" size={48} className="text-neutral-300" />
           )}
 
           <button
@@ -58,9 +59,9 @@ export function ProductCard({ product }: { product: Product }) {
               toggle(product.id);
             }}
             className="absolute top-1.5 right-1.5 flex h-10 w-10 items-center justify-center rounded-full glass text-sm"
-            aria-label="Toggle wishlist"
+            aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
           >
-            {wished ? "❤️" : "🤍"}
+            <Icon name="heart" size={18} filled={wished} className={wished ? "text-red-500" : "text-neutral-600"} />
           </button>
 
           <button

@@ -12,7 +12,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     .update({
       name: body.name,
       slug: slugify(body.name),
-      icon: body.icon || "📦",
+      icon: body.icon || null,
       description: body.description || null,
     })
     .eq("id", id);

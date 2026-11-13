@@ -46,7 +46,7 @@ export function orderDetailsWhatsappLink({
     .join("\n");
 
   const message = [
-    "🧱 New Order - Chaaz Builders",
+    "*New Order - Chaaz Builders*",
     `Order #: ${orderNumber}`,
     "",
     `Customer: ${name}`,

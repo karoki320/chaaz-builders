@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import type { BlogPost } from "@/lib/types";
+import { Icon } from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <Image src={post.cover_image_url} alt={post.title} fill sizes="(max-width: 768px) 100vw, 700px" className="object-cover" priority />
         </div>
       ) : (
-        <div className="text-4xl mb-3">{post.cover_icon ?? "📝"}</div>
+        <Icon name="document" size={40} className="mb-3 text-neutral-300" />
       )}
       <h1 className="text-xl sm:text-2xl font-bold">{post.title}</h1>
       <p className="text-xs text-neutral-400 mt-1 mb-6">

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
+import { Icon } from "@/components/Icon";
 
 export function Footer() {
   return (
@@ -10,7 +11,9 @@ export function Footer() {
           <p className="text-sm mt-4 max-w-xs text-white/60">
             Quality plumbing and building materials, stocked and delivered fast across Kenya.
           </p>
-          <p className="text-sm mt-4">📞 0741 164235</p>
+          <a href="tel:+254741164235" className="text-sm mt-4 inline-flex items-center gap-2">
+            <Icon name="phone" size={16} /> 0741 164235
+          </a>
         </div>
 
         <div>

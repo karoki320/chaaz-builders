@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { Icon } from "@/components/Icon";
 
 type NavLink = { href: string; label: string; icon: string };
 
@@ -21,7 +22,7 @@ export function AdminMobileNav({ links }: { links: NavLink[] }) {
           aria-expanded={open}
           className="flex items-center justify-center min-w-[44px] min-h-[44px] -ml-2 text-2xl leading-none"
         >
-          ⋮
+          <Icon name="more-vertical" size={22} />
         </button>
         <p className="font-semibold">{current ? current.label : "Chaaz Admin"}</p>
       </div>
@@ -53,7 +54,7 @@ export function AdminMobileNav({ links }: { links: NavLink[] }) {
                     pathname?.startsWith(l.href) ? "bg-neutral-100 font-medium" : ""
                   }`}
                 >
-                  <span className="text-lg">{l.icon}</span>
+                  <Icon name={l.icon} size={18} className="text-neutral-500" />
                   {l.label}
                 </Link>
               ))}
@@ -62,7 +63,7 @@ export function AdminMobileNav({ links }: { links: NavLink[] }) {
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-3 px-4 min-h-[48px] text-sm border-t text-neutral-500"
               >
-                <span className="text-lg">🌐</span>
+                <Icon name="globe" size={18} />
                 View site
               </Link>
             </motion.div>

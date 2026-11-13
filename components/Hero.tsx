@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { Icon } from "@/components/Icon";
 
 type Slide = {
   image: string;
@@ -102,17 +103,17 @@ export function Hero() {
                 {slide.ctaLabel}
               </Link>
               <Link
-                href="#categories"
+                href="#products"
                 className="text-center rounded-full bg-white/80 border border-brand/20 px-8 py-3.5 font-semibold text-brand-dark backdrop-blur transition-transform active:scale-95 sm:hover:scale-105"
               >
-                Browse Categories
+                Browse All Products
               </Link>
             </div>
 
             <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-neutral-600">
               {badges.map((b) => (
                 <span key={b} className="flex items-center gap-1.5">
-                  <span className="text-accent">✓</span> {b}
+                  <Icon name="check" size={16} className="text-accent" /> {b}
                 </span>
               ))}
             </div>

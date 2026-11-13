@@ -2,6 +2,7 @@ import { getServiceSupabase } from "@/lib/supabase/server";
 import { formatKES } from "@/lib/utils";
 import { orderDetailsWhatsappLink } from "@/lib/whatsapp";
 import { notFound } from "next/navigation";
+import { Icon } from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -36,7 +37,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
 
   return (
     <div className="max-w-md mx-auto px-4 py-16 text-center">
-      <div className="text-5xl mb-4">✅</div>
+      <Icon name="check-circle" size={56} className="mx-auto mb-4 text-accent" />
       <h1 className="text-xl font-semibold mb-2">Order received!</h1>
       <p className="text-neutral-600 mb-1">
         Order number: <strong>{o.order_number}</strong>

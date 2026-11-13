@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const { error } = await supabase.from("categories").insert({
     name: body.name,
     slug: slugify(body.name),
-    icon: body.icon || "📦",
+    icon: body.icon || null,
     description: body.description || null,
   });
 

@@ -2,12 +2,12 @@ import Link from "next/link";
 import { AdminMobileNav } from "./AdminMobileNav";
 
 const links = [
-  { href: "/admin/dashboard", label: "Dashboard", icon: "📊" },
-  { href: "/admin/products", label: "Products", icon: "🧱" },
-  { href: "/admin/categories", label: "Categories", icon: "🗂️" },
-  { href: "/admin/orders", label: "Orders", icon: "🧾" },
-  { href: "/admin/blog", label: "Blog", icon: "📝" },
-  { href: "/admin/messages", label: "Messages", icon: "💬" },
+  { href: "/admin/dashboard", label: "Dashboard", icon: "dashboard" },
+  { href: "/admin/products", label: "Products", icon: "box" },
+  { href: "/admin/categories", label: "Categories", icon: "folder" },
+  { href: "/admin/orders", label: "Orders", icon: "receipt" },
+  { href: "/admin/blog", label: "Blog", icon: "document" },
+  { href: "/admin/messages", label: "Messages", icon: "chat" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

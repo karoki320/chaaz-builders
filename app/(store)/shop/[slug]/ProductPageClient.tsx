@@ -7,6 +7,7 @@ import type { Product } from "@/lib/types";
 import { formatKES } from "@/lib/utils";
 import { productWhatsappLink } from "@/lib/whatsapp";
 import { useCart } from "@/contexts/CartContext";
+import { Icon } from "@/components/Icon";
 
 export function ProductPageClient({ product }: { product: Product }) {
   const { addItem } = useCart();
@@ -39,7 +40,7 @@ export function ProductPageClient({ product }: { product: Product }) {
           {product.image_url ? (
             <Image src={product.image_url} alt={product.name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
           ) : (
-            product.icon ?? "🧱"
+            <Icon name="box" size={72} className="text-neutral-300" />
           )}
         </div>
 

@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import type { BlogPost } from "@/lib/types";
+import { Icon } from "@/components/Icon";
 
 export function BlogPostRow({ post }: { post: BlogPost }) {
   const [isPending, startTransition] = useTransition();
@@ -39,7 +40,7 @@ export function BlogPostRow({ post }: { post: BlogPost }) {
           {post.cover_image_url ? (
             <Image src={post.cover_image_url} alt={post.title} fill sizes="40px" className="object-cover" />
           ) : (
-            <span>{post.cover_icon ?? "📝"}</span>
+            <Icon name="document" size={18} className="text-neutral-400" />
           )}
         </div>
         <div className="min-w-0">

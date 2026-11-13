@@ -1,3 +1,5 @@
+import { Icon } from "@/components/Icon";
+
 export default function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
@@ -11,7 +13,9 @@ export default function AboutPage() {
         Whether you&apos;re fitting a single bathroom or supplying a full site, our team can help
         you get the right materials the first time - call, WhatsApp, or visit the shop.
       </p>
-      <p className="text-brand-dark font-semibold">📞 0741 164235</p>
+      <a href="tel:+254741164235" className="inline-flex items-center gap-2 text-brand-dark font-semibold">
+        <Icon name="phone" size={18} /> 0741 164235
+      </a>
     </div>
   );
 }
