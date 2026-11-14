@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@/components/Icon";
+import { LogoutButton } from "./LogoutButton";
 
 type NavLink = { href: string; label: string; icon: string };
 
@@ -66,6 +67,7 @@ export function AdminMobileNav({ links }: { links: NavLink[] }) {
                 <Icon name="globe" size={18} />
                 View site
               </Link>
+              <LogoutButton className="w-full flex items-center gap-3 px-4 min-h-[48px] text-sm border-t text-red-600" />
             </motion.div>
           </>
         )}

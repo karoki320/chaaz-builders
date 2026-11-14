@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AdminMobileNav } from "./AdminMobileNav";
+import { LogoutButton } from "./LogoutButton";
 
 const links = [
   { href: "/admin/dashboard", label: "Dashboard", icon: "dashboard" },
@@ -23,6 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {l.label}
             </Link>
           ))}
+          <LogoutButton className="mt-4 px-3 py-2 rounded text-left text-red-600 hover:bg-red-50" />
         </nav>
       </aside>
 
