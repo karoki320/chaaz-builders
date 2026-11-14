@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Icon } from "@/components/Icon";
+import { BUSINESS } from "@/lib/business";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -20,9 +21,14 @@ export default function AboutPage() {
         Whether you&apos;re fitting a single bathroom or supplying a full site, our team can help
         you get the right materials the first time - call, WhatsApp, or visit the shop.
       </p>
-      <a href="tel:+254741164235" className="inline-flex items-center gap-2 text-brand-dark font-semibold">
-        <Icon name="phone" size={18} /> 0741 164235
-      </a>
+      <div className="flex flex-col gap-2">
+        <a href={`tel:${BUSINESS.phoneTel}`} className="inline-flex items-center gap-2 text-brand-dark font-semibold">
+          <Icon name="phone" size={18} /> {BUSINESS.phoneDisplay}
+        </a>
+        <a href={BUSINESS.mapUrl ?? "#"} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-brand-dark">
+          <Icon name="map-pin" size={18} /> {BUSINESS.address} - open in Google Maps
+        </a>
+      </div>
     </div>
   );
 }

@@ -9,8 +9,10 @@ import { Logo } from "@/components/Logo";
 import { CategoryIcon, Icon } from "@/components/Icon";
 import type { Category } from "@/lib/types";
 
-const PHONE_DISPLAY = "0741 164235";
-const PHONE_TEL = "+254741164235";
+import { BUSINESS } from "@/lib/business";
+
+const PHONE_DISPLAY = BUSINESS.phoneDisplay;
+const PHONE_TEL = BUSINESS.phoneTel;
 
 export function Navbar({ categories }: { categories: Category[] }) {
   const { count } = useCart();

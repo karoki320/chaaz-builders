@@ -1,6 +1,8 @@
 import { formatKES } from "./utils";
+import { BUSINESS } from "./business";
 
-const NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
+// Falls back to the shop's WhatsApp number if the env var is missing.
+const NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || BUSINESS.whatsapp;
 
 export function whatsappLink(message: string) {
   const encoded = encodeURIComponent(message);

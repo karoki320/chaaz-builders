@@ -26,9 +26,14 @@ export function Footer() {
               <Icon name="whatsapp" size={16} /> Chat on WhatsApp
             </a>
             {BUSINESS.address && (
-              <p className="flex items-center gap-2">
+              <a
+                href={BUSINESS.mapUrl ?? "#"}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 hover:text-white"
+              >
                 <Icon name="map-pin" size={16} /> {BUSINESS.address}
-              </p>
+              </a>
             )}
             {BUSINESS.hours && (
               <p className="flex items-center gap-2">

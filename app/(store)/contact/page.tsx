@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Icon } from "@/components/Icon";
+import { BUSINESS } from "@/lib/business";
+import { whatsappLink } from "@/lib/whatsapp";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", website: "" });
@@ -25,7 +28,34 @@ export default function ContactPage() {
 
   return (
     <div className="max-w-md mx-auto px-4 py-8">
-      <h1 className="text-xl font-semibold mb-6">Contact us</h1>
+      <h1 className="text-xl font-semibold mb-4">Contact us</h1>
+      <div className="mb-6 space-y-3 rounded-2xl bg-white border border-neutral-100 p-4 text-sm">
+        <a href={`tel:${BUSINESS.phoneTel}`} className="flex items-center gap-3 text-brand-dark font-medium">
+          <Icon name="phone" size={18} className="text-brand" /> {BUSINESS.phoneDisplay}
+        </a>
+        <a
+          href={whatsappLink("Hi Chaaz Builders, I have a question.")}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-3 text-brand-dark font-medium"
+        >
+          <Icon name="whatsapp" size={18} className="text-accent" /> Chat on WhatsApp
+        </a>
+        {BUSINESS.address && (
+          <a href={BUSINESS.mapUrl ?? "#"} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-brand-dark">
+            <Icon name="map-pin" size={18} className="text-brand" />
+            <span>
+              {BUSINESS.address} <span className="text-brand underline underline-offset-2">Get directions</span>
+            </span>
+          </a>
+        )}
+        {BUSINESS.hours && (
+          <p className="flex items-center gap-3 text-neutral-600">
+            <Icon name="clock" size={18} className="text-brand" /> {BUSINESS.hours}
+          </p>
+        )}
+      </div>
+      <p className="text-sm text-neutral-500 mb-4">Or send us a message:</p>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Honeypot for spam bots - hidden from people and screen readers */}
         <input

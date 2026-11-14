@@ -40,7 +40,11 @@ export default async function HomePage() {
           areaServed: { "@type": "City", name: "Nairobi" },
           priceRange: "KES",
           ...(BUSINESS.address
-            ? { address: { "@type": "PostalAddress", streetAddress: BUSINESS.address, addressLocality: "Nairobi", addressCountry: "KE" } }
+            ? {
+                address: { "@type": "PostalAddress", streetAddress: BUSINESS.address, addressLocality: "Nairobi", addressCountry: "KE" },
+                geo: { "@type": "GeoCoordinates", latitude: BUSINESS.geo.lat, longitude: BUSINESS.geo.lng },
+                hasMap: BUSINESS.mapUrl,
+              }
             : { address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" } }),
           ...(BUSINESS.hours ? { openingHours: BUSINESS.hours } : {}),
         }}
