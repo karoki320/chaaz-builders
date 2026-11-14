@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
-import { displayName, formatKES, stockLabel } from "@/lib/utils";
+import { displayName, formatKES, hasPrice, stockLabel } from "@/lib/utils";
 import { productWhatsappLink } from "@/lib/whatsapp";
 import { useCart } from "@/contexts/CartContext";
 import { Icon } from "@/components/Icon";
@@ -26,6 +26,7 @@ export function ProductPageClient({
 
   const name = displayName(product.name);
   const price = parseFloat(product.price);
+  const priced = hasPrice(price);
   const stock = stockLabel(product.stock);
   const gallery = Array.from(
     new Set([product.image_url, ...(Array.isArray(product.images) ? product.images : [])].filter(Boolean) as string[])
@@ -125,7 +126,9 @@ export function ProductPageClient({
         {/* Details */}
         <div>
           <h1 className="text-xl sm:text-2xl font-semibold text-brand-dark">{name}</h1>
-          <p className="text-2xl font-bold text-brand-dark mt-2">{formatKES(price)}</p>
+          <p className="text-2xl font-bold text-brand-dark mt-2">
+            {priced ? formatKES(price) : <span className="text-lg text-neutral-500">Price on request</span>}
+          </p>
           <p
             className={`text-sm mt-1 font-medium ${
               stock.tone === "out" ? "text-neutral-400" : stock.tone === "low" ? "text-amber-600" : "text-accent-dark"
@@ -150,6 +153,7 @@ export function ProductPageClient({
           )}
 
           {/* Desktop / tablet actions - mobile uses the sticky bar below */}
+          {priced && (
           <div className="hidden sm:flex items-center gap-3 mt-6">
             {qtyControl}
             <button
@@ -161,14 +165,17 @@ export function ProductPageClient({
               {added ? "Added to cart" : "Add to cart"}
             </button>
           </div>
+          )}
 
           <a
             href={productWhatsappLink(name, price)}
             target="_blank"
             rel="noreferrer"
-            className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border-2 border-accent text-accent-dark py-3 font-semibold hover:bg-accent/5"
+            className={`mt-3 flex w-full items-center justify-center gap-2 rounded-full py-3 font-semibold ${
+              priced ? "border-2 border-accent text-accent-dark hover:bg-accent/5" : "bg-green-gradient text-white mt-6"
+            }`}
           >
-            <Icon name="whatsapp" size={18} /> Order on WhatsApp
+            <Icon name="whatsapp" size={18} /> {priced ? "Order on WhatsApp" : "Ask for price on WhatsApp"}
           </a>
 
           <div className="mt-6 space-y-3 rounded-2xl bg-white border border-neutral-100 p-4 text-sm">
@@ -207,6 +214,17 @@ export function ProductPageClient({
 
       {/* Sticky mobile add-to-cart bar */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] flex items-center gap-3">
+        {!priced ? (
+          <a
+            href={productWhatsappLink(name, 0)}
+            target="_blank"
+            rel="noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 bg-green-gradient text-white py-3 rounded-full font-semibold text-sm"
+          >
+            <Icon name="whatsapp" size={18} /> Ask for price on WhatsApp
+          </a>
+        ) : (
+        <>
         {qtyControl}
         <button
           onClick={handleAddToCart}
@@ -215,6 +233,8 @@ export function ProductPageClient({
         >
           {stock.tone === "out" ? "Out of stock" : added ? "Added!" : `Add - ${formatKES(price * quantity)}`}
         </button>
+        </>
+        )}
       </div>
     </div>
   );

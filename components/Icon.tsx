@@ -138,6 +138,12 @@ const paths: Record<string, React.ReactNode> = {
       <path d="m9 12 2 2 4-4" />
     </>
   ),
+  lock: (
+    <>
+      <rect x="5" y="10.5" width="14" height="10.5" rx="2" />
+      <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3M12 15v2" />
+    </>
+  ),
   "arrow-right": <path d="M5 12h14M13 6l6 6-6 6" />,
   plus: <path d="M12 5v14M5 12h14" />,
   truck: (
@@ -187,6 +193,7 @@ export function categoryIconName(slugOrName: string | null | undefined): string 
   if (s.includes("plumb") || s.includes("pipe")) return "plumbing";
   if (s.includes("steel") || s.includes("iron") || s.includes("metal")) return "steel";
   if (s.includes("tile") || s.includes("floor")) return "tiles";
+  if (s.includes("lock") || s.includes("door")) return "lock";
   if (s.includes("tool") || s.includes("equip")) return "tools";
   return "box";
 }

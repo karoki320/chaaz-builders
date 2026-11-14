@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import type { Product } from "@/lib/types";
-import { displayName, formatKES } from "@/lib/utils";
+import { displayName, formatKES, hasPrice } from "@/lib/utils";
 import { ProductPageClient } from "./ProductPageClient";
 import { JsonLd } from "@/components/JsonLd";
 import { BUSINESS } from "@/lib/business";
@@ -27,17 +27,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!product) return { title: "Product not found" };
 
   const name = displayName(product.name);
+  const priceText = hasPrice(product.price) ? formatKES(product.price) : "Ask for price";
   const description =
     product.description?.trim().slice(0, 160) ||
-    `${name} - ${formatKES(product.price)}. Order on WhatsApp from Chaaz Builders, delivered across Nairobi and its environs.`;
+    `${name} - ${priceText}. Order on WhatsApp from Chaaz Builders, delivered across Nairobi and its environs.`;
   const image = product.image_url ?? "/og-image.jpg";
 
   return {
-    title: `${name} - ${formatKES(product.price)}`,
+    title: hasPrice(product.price) ? `${name} - ${priceText}` : name,
     description,
     alternates: { canonical: `/shop/${product.slug}` },
     openGraph: {
-      title: `${name} - ${formatKES(product.price)}`,
+      title: hasPrice(product.price) ? `${name} - ${priceText}` : name,
       description,
       url: `/shop/${product.slug}`,
       type: "website",
@@ -74,7 +75,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             ...(images.length ? { image: images } : {}),
             description: product.description?.trim() || `${name} from Chaaz Builders, Nairobi.`,
             ...(product.categories ? { category: product.categories.name } : {}),
-            offers: {
+            ...(hasPrice(product.price) ? { offers: {
               "@type": "Offer",
               url,
               priceCurrency: "KES",
@@ -82,7 +83,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
               itemCondition: "https://schema.org/NewCondition",
               seller: { "@type": "Organization", name: BUSINESS.name },
-            },
+            } } : {}),
           },
           {
             "@context": "https://schema.org",

@@ -8,6 +8,9 @@ export function whatsappLink(message: string) {
 }
 
 export function productWhatsappLink(productName: string, price: number) {
+  if (!price || price <= 0) {
+    return whatsappLink(`Hi Chaaz Builders, I'm interested in "${productName}". What is the price, and is it in stock?`);
+  }
   return whatsappLink(
     `Hi Chaaz Builders, I'm interested in "${productName}" (KES ${price.toLocaleString()}). Is it in stock?`
   );

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/lib/types";
-import { displayName, formatKES, stockLabel } from "@/lib/utils";
+import { displayName, formatKES, hasPrice, stockLabel } from "@/lib/utils";
 import { productWhatsappLink } from "@/lib/whatsapp";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
@@ -18,6 +18,7 @@ export function ProductCard({ product }: { product: Product }) {
   const stock = stockLabel(product.stock);
   const name = displayName(product.name);
   const price = parseFloat(product.price);
+  const priced = hasPrice(price);
 
   function quickAdd() {
     addItem({
@@ -77,7 +78,19 @@ export function ProductCard({ product }: { product: Product }) {
           {stock.text}
         </p>
 
-        <p className="mt-auto pt-2 font-bold text-brand-dark text-base">{formatKES(price)}</p>
+        <p className="mt-auto pt-2 font-bold text-brand-dark text-base">
+          {priced ? formatKES(price) : <span className="text-sm text-neutral-500 font-semibold">Ask for price</span>}
+        </p>
+        {!priced ? (
+          <a
+            href={productWhatsappLink(name, 0)}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-2.5 flex h-9 items-center justify-center gap-1.5 rounded-full bg-green-gradient text-white text-xs font-semibold"
+          >
+            <Icon name="whatsapp" size={16} /> Get price
+          </a>
+        ) : (
         <div className="mt-2.5 flex items-center gap-1.5">
           <button
             type="button"
@@ -99,6 +112,7 @@ export function ProductCard({ product }: { product: Product }) {
             <Icon name="whatsapp" size={17} />
           </a>
         </div>
+        )}
       </div>
     </div>
   );

@@ -27,6 +27,12 @@ export function generateOrderNumber() {
   return `CB-${stamp}-${rand}`;
 }
 
+// Products added before a price is confirmed are stored with price 0.
+export function hasPrice(price: number | string) {
+  const n = typeof price === "string" ? parseFloat(price) : price;
+  return Number.isFinite(n) && n > 0;
+}
+
 // Friendly stock label instead of exposing raw inventory numbers.
 export function stockLabel(stock: number): { text: string; tone: "ok" | "low" | "out" } {
   if (stock <= 0) return { text: "Out of stock", tone: "out" };

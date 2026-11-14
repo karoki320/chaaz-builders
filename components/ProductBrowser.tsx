@@ -51,8 +51,9 @@ export function ProductBrowser({
     });
 
     const sorted = [...filtered];
-    if (sort === "price-asc") sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-    else if (sort === "price-desc") sorted.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    const p = (x: BrowserProduct) => parseFloat(x.price) || 0;
+    if (sort === "price-asc") sorted.sort((a, b) => (p(a) > 0 ? p(a) : Infinity) - (p(b) > 0 ? p(b) : Infinity));
+    else if (sort === "price-desc") sorted.sort((a, b) => p(b) - p(a));
     else if (sort === "name") sorted.sort((a, b) => a.name.localeCompare(b.name));
     else
       sorted.sort(
