@@ -1,6 +1,7 @@
 import { getServiceSupabase } from "@/lib/supabase/server";
 import { Hero } from "@/components/Hero";
 import { ProductBrowser } from "@/components/ProductBrowser";
+import { TrustSection } from "@/components/TrustSection";
 import type { Category, Product } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -24,6 +25,7 @@ export default async function HomePage() {
     <div>
       <Hero />
       <ProductBrowser products={products} categories={categories} />
+      <TrustSection />
     </div>
   );
 }

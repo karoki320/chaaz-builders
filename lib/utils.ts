@@ -26,3 +26,16 @@ export function generateOrderNumber() {
   const rand = Math.floor(1000 + Math.random() * 9000);
   return `CB-${stamp}-${rand}`;
 }
+
+// Friendly stock label instead of exposing raw inventory numbers.
+export function stockLabel(stock: number): { text: string; tone: "ok" | "low" | "out" } {
+  if (stock <= 0) return { text: "Out of stock", tone: "out" };
+  if (stock <= 5) return { text: `Only ${stock} left`, tone: "low" };
+  return { text: "In stock", tone: "ok" };
+}
+
+// Capitalizes the first letter of a product name for display ("shower head" -> "Shower head").
+export function displayName(name: string) {
+  const t = name.trim();
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}

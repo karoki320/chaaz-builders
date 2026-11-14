@@ -12,13 +12,33 @@ type SortKey = "featured" | "price-asc" | "price-desc" | "name";
 export function ProductBrowser({
   products,
   categories,
+  initialQuery = "",
+  initialCategory = "all",
+  heading = "All Products",
+  asPageTitle = false,
 }: {
   products: BrowserProduct[];
   categories: Category[];
+  initialQuery?: string;
+  initialCategory?: string;
+  heading?: string;
+  asPageTitle?: boolean;
 }) {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<string>("all");
+  const [query, setQuery] = useState(initialQuery);
+  const [category, setCategory] = useState<string>(initialCategory);
+  const Heading = asPageTitle ? "h1" : "h2";
   const [sort, setSort] = useState<SortKey>("featured");
+
+  // Only show categories that actually have products, with a count on each chip.
+  const counts = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const p of products) {
+      const slug = p.categories?.slug;
+      if (slug) m.set(slug, (m.get(slug) ?? 0) + 1);
+    }
+    return m;
+  }, [products]);
+  const visibleCategories = categories.filter((c) => (counts.get(c.slug) ?? 0) > 0);
 
   const results = useMemo(() => {
     const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -53,7 +73,7 @@ export function ProductBrowser({
     <section id="products" className="max-w-6xl mx-auto px-4 pt-10 pb-16 scroll-mt-24">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-5">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-brand-dark">All Products</h2>
+          <Heading className="text-2xl sm:text-3xl font-bold text-brand-dark">{heading}</Heading>
           <p className="text-neutral-500 text-sm mt-1">
             {results.length} {results.length === 1 ? "product" : "products"}
             {category !== "all" && ` in ${categories.find((c) => c.slug === category)?.name ?? ""}`}
@@ -102,12 +122,12 @@ export function ProductBrowser({
         {/* Category chips */}
         <div className="flex gap-2 overflow-x-auto mt-3 pb-1 -mx-4 px-4 [scrollbar-width:none]">
           <button type="button" onClick={() => setCategory("all")} className={chip(category === "all")}>
-            All
+            All <span className="opacity-70">({products.length})</span>
           </button>
-          {categories.map((c) => (
+          {visibleCategories.map((c) => (
             <button key={c.id} type="button" onClick={() => setCategory(c.slug)} className={chip(category === c.slug)}>
               <CategoryIcon slug={c.slug} size={16} />
-              {c.name}
+              {c.name} <span className="opacity-70">({counts.get(c.slug)})</span>
             </button>
           ))}
         </div>

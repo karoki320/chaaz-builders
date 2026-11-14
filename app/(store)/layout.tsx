@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { MobileCartBar } from "@/components/MobileCartBar";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import type { Category } from "@/lib/types";
 
@@ -15,6 +16,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
       <Navbar categories={categories} />
       <main className="flex-1">{children}</main>
       <Footer />
+      <MobileCartBar />
     </div>
   );
 }

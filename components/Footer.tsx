@@ -1,19 +1,41 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { Icon } from "@/components/Icon";
+import { BUSINESS } from "@/lib/business";
+import { whatsappLink } from "@/lib/whatsapp";
 
 export function Footer() {
   return (
-    <footer className="bg-navy-gradient text-white/80 mt-16">
+    <footer className="bg-navy-gradient text-white/80 pb-20 sm:pb-0">
       <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-4 gap-10">
         <div className="md:col-span-2">
           <Logo full />
           <p className="text-sm mt-4 max-w-xs text-white/60">
-            Quality plumbing and building materials, stocked and delivered fast across Kenya.
+            Quality plumbing and building materials, delivered across {BUSINESS.deliveryArea}.
           </p>
-          <a href="tel:+254741164235" className="text-sm mt-4 inline-flex items-center gap-2">
-            <Icon name="phone" size={16} /> 0741 164235
-          </a>
+          <div className="mt-5 space-y-2 text-sm">
+            <a href={`tel:${BUSINESS.phoneTel}`} className="flex items-center gap-2 hover:text-white">
+              <Icon name="phone" size={16} /> {BUSINESS.phoneDisplay}
+            </a>
+            <a
+              href={whatsappLink("Hi Chaaz Builders, I have a question.")}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 hover:text-white"
+            >
+              <Icon name="whatsapp" size={16} /> Chat on WhatsApp
+            </a>
+            {BUSINESS.address && (
+              <p className="flex items-center gap-2">
+                <Icon name="map-pin" size={16} /> {BUSINESS.address}
+              </p>
+            )}
+            {BUSINESS.hours && (
+              <p className="flex items-center gap-2">
+                <Icon name="clock" size={16} /> {BUSINESS.hours}
+              </p>
+            )}
+          </div>
         </div>
 
         <div>

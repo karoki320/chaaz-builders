@@ -36,7 +36,7 @@ const slides: Slide[] = [
     image: "/hero/hero-3.jpg",
     headline: "Everything For",
     highlight: "Your Build",
-    subheading: "Cement, electrical, tools and fittings - one store, every project covered.",
+    subheading: "Plumbing, paint, tiles, tools and fittings - one store, every project covered.",
     ctaLabel: "Shop All Products",
     ctaHref: "/shop",
   },
@@ -55,7 +55,7 @@ export function Hero() {
   const slide = slides[index];
 
   return (
-    <section className="relative overflow-hidden h-[520px] sm:h-[560px] md:h-[640px]">
+    <section className="relative overflow-hidden h-[340px] sm:h-[440px] md:h-[500px]">
       <AnimatePresence mode="sync">
         <motion.div
           key={slide.image}
@@ -73,8 +73,7 @@ export function Hero() {
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-white/80 sm:hidden" />
-          <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-white via-white/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/75 to-white/10 sm:from-white sm:via-white/60 sm:to-transparent" />
         </motion.div>
       </AnimatePresence>
 
@@ -88,29 +87,29 @@ export function Hero() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="max-w-lg"
           >
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-tight text-brand-dark">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-tight text-brand-dark">
               {slide.headline}
               <br />
               <span className="text-gradient-brand">{slide.highlight}</span>
             </h1>
-            <p className="mt-5 text-neutral-600 text-lg max-w-md">{slide.subheading}</p>
+            <p className="mt-3 sm:mt-5 text-neutral-700 text-base sm:text-lg max-w-[18rem] sm:max-w-md">{slide.subheading}</p>
 
-            <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+            <div className="mt-5 sm:mt-8 flex flex-row flex-wrap gap-3 sm:gap-4">
               <Link
                 href={slide.ctaHref}
-                className="text-center rounded-full bg-brand-gradient text-white px-8 py-3.5 font-semibold shadow-glow transition-transform active:scale-95 sm:hover:scale-105"
+                className="text-center rounded-full bg-brand-gradient text-white px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-semibold shadow-glow transition-transform active:scale-95 sm:hover:scale-105"
               >
                 {slide.ctaLabel}
               </Link>
               <Link
                 href="#products"
-                className="text-center rounded-full bg-white/80 border border-brand/20 px-8 py-3.5 font-semibold text-brand-dark backdrop-blur transition-transform active:scale-95 sm:hover:scale-105"
+                className="hidden sm:inline-block text-center rounded-full bg-white/80 border border-brand/20 px-8 py-3.5 font-semibold text-brand-dark backdrop-blur transition-transform active:scale-95 sm:hover:scale-105"
               >
                 Browse All Products
               </Link>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-neutral-600">
+            <div className="mt-8 hidden sm:flex flex-wrap gap-x-5 gap-y-2 text-sm text-neutral-600">
               {badges.map((b) => (
                 <span key={b} className="flex items-center gap-1.5">
                   <Icon name="check" size={16} className="text-accent" /> {b}
@@ -121,7 +120,7 @@ export function Hero() {
         </AnimatePresence>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
         {slides.map((s, i) => (
           <button
             key={s.image}
