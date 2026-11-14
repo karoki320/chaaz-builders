@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getServiceSupabase } from "@/lib/supabase/server";
@@ -5,6 +6,27 @@ import type { BlogPost } from "@/lib/types";
 import { Icon } from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = getServiceSupabase();
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("title, excerpt, cover_image_url, slug")
+    .eq("slug", slug)
+    .eq("published", true)
+    .maybeSingle();
+  if (!data) return { title: "Post not found" };
+  const description = data.excerpt ?? `${data.title} - Chaaz Builders blog.`;
+  const image = data.cover_image_url ?? "/og-image.jpg";
+  return {
+    title: data.title,
+    description,
+    alternates: { canonical: `/blog/${data.slug}` },
+    openGraph: { type: "article", title: data.title, description, url: `/blog/${data.slug}`, images: [{ url: image }] },
+    twitter: { card: "summary_large_image", title: data.title, description, images: [image] },
+  };
+}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

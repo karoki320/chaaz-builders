@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminMobileNav } from "./AdminMobileNav";
 import { LogoutButton } from "./LogoutButton";
+
+export const metadata: Metadata = {
+  title: "Admin",
+  robots: { index: false, follow: false },
+};
 
 const links = [
   { href: "/admin/dashboard", label: "Dashboard", icon: "dashboard" },

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/contexts/CartContext";
@@ -17,12 +17,28 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.chaazbuilders.com"),
-  title: "Chaaz Builders | Premium Building Materials & Plumbing Supplies",
+  title: {
+    default: "Chaaz Builders | Building Materials & Plumbing Supplies in Nairobi",
+    template: "%s | Chaaz Builders",
+  },
   description,
+  applicationName: "Chaaz Builders",
+  keywords: [
+    "building materials Nairobi",
+    "plumbing supplies Nairobi",
+    "bathroom fittings Kenya",
+    "sanitary ware Nairobi",
+    "paint",
+    "tiles",
+    "steel",
+    "hardware shop Nairobi",
+    "Chaaz Builders",
+  ],
+  formatDetection: { telephone: true },
   openGraph: {
     type: "website",
     siteName: "Chaaz Builders",
-    title: "Chaaz Builders | Building Materials & Plumbing Supplies",
+    title: "Chaaz Builders | Building Materials & Plumbing Supplies in Nairobi",
     description,
     url: "/",
     locale: "en_KE",
@@ -30,10 +46,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chaaz Builders | Building Materials & Plumbing Supplies",
+    title: "Chaaz Builders | Building Materials & Plumbing Supplies in Nairobi",
     description,
     images: ["/og-image.jpg"],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#071A3D",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

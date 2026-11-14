@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { Icon } from "@/components/Icon";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "Chaaz Builders supplies plumbing, bathroom fittings, paint, tiles, steel and tools, delivered across Nairobi and its environs.",
+  alternates: { canonical: "/about" },
+};
 
 export default function AboutPage() {
   return (

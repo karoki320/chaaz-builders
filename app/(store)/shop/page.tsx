@@ -4,7 +4,11 @@ import type { Category, Product } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Shop All Products | Chaaz Builders" };
+export const metadata = {
+  title: "Shop All Products",
+  description: "Browse bathroom fittings, plumbing, paint, tiles, steel and tools. Order on WhatsApp - delivered across Nairobi and its environs.",
+  alternates: { canonical: "/shop" },
+};
 
 export default async function ShopPage({
   searchParams,

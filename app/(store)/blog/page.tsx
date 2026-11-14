@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getServiceSupabase } from "@/lib/supabase/server";
@@ -5,6 +6,12 @@ import type { BlogPost } from "@/lib/types";
 import { Icon } from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Blog - Building & Plumbing Tips",
+  description: "Building, plumbing and bathroom tips from the Chaaz Builders team in Nairobi.",
+  alternates: { canonical: "/blog" },
+};
 
 export default async function BlogPage() {
   const supabase = getServiceSupabase();

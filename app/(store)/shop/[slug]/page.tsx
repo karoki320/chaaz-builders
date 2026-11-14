@@ -4,6 +4,8 @@ import { getServiceSupabase } from "@/lib/supabase/server";
 import type { Product } from "@/lib/types";
 import { displayName, formatKES } from "@/lib/utils";
 import { ProductPageClient } from "./ProductPageClient";
+import { JsonLd } from "@/components/JsonLd";
+import { BUSINESS } from "@/lib/business";
 
 export const dynamic = "force-dynamic";
 
@@ -22,16 +24,16 @@ async function getProduct(slug: string) {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProduct(slug);
-  if (!product) return { title: "Product not found | Chaaz Builders" };
+  if (!product) return { title: "Product not found" };
 
   const name = displayName(product.name);
   const description =
-    product.description?.slice(0, 160) ??
+    product.description?.trim().slice(0, 160) ||
     `${name} - ${formatKES(product.price)}. Order on WhatsApp from Chaaz Builders, delivered across Nairobi and its environs.`;
   const image = product.image_url ?? "/og-image.jpg";
 
   return {
-    title: `${name} | Chaaz Builders`,
+    title: `${name} - ${formatKES(product.price)}`,
     description,
     alternates: { canonical: `/shop/${product.slug}` },
     openGraph: {
@@ -55,11 +57,48 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (product.category_id) relatedQuery = relatedQuery.eq("category_id", product.category_id);
   const { data: related } = await relatedQuery.limit(4);
 
+  const name = displayName(product.name);
+  const url = `${BUSINESS.siteUrl}/shop/${product.slug}`;
+  const images = [product.image_url, ...(Array.isArray(product.images) ? product.images : [])].filter(Boolean);
+
   return (
-    <ProductPageClient
-      product={product}
-      category={product.categories}
-      related={(related ?? []) as Product[]}
-    />
+    <>
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name,
+            sku: product.slug,
+            url,
+            ...(images.length ? { image: images } : {}),
+            description: product.description?.trim() || `${name} from Chaaz Builders, Nairobi.`,
+            ...(product.categories ? { category: product.categories.name } : {}),
+            offers: {
+              "@type": "Offer",
+              url,
+              priceCurrency: "KES",
+              price: parseFloat(product.price),
+              availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+              itemCondition: "https://schema.org/NewCondition",
+              seller: { "@type": "Organization", name: BUSINESS.name },
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: BUSINESS.siteUrl },
+              { "@type": "ListItem", position: 2, name: "Shop", item: `${BUSINESS.siteUrl}/shop` },
+              ...(product.categories
+                ? [{ "@type": "ListItem", position: 3, name: product.categories.name, item: `${BUSINESS.siteUrl}/shop?category=${product.categories.slug}` }]
+                : []),
+              { "@type": "ListItem", position: product.categories ? 4 : 3, name, item: url },
+            ],
+          },
+        ]}
+      />
+      <ProductPageClient product={product} category={product.categories} related={(related ?? []) as Product[]} />
+    </>
   );
 }

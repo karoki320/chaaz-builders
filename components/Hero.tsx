@@ -87,11 +87,11 @@ export function Hero() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="max-w-lg"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-tight text-brand-dark">
+            <p className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-tight text-brand-dark">
               {slide.headline}
               <br />
               <span className="text-gradient-brand">{slide.highlight}</span>
-            </h1>
+            </p>
             <p className="mt-3 sm:mt-5 text-neutral-700 text-base sm:text-lg max-w-[18rem] sm:max-w-md">{slide.subheading}</p>
 
             <div className="mt-5 sm:mt-8 flex flex-row flex-wrap gap-3 sm:gap-4">
