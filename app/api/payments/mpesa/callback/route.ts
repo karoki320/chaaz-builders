@@ -1,32 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabase/server";
+import { NextResponse } from "next/server";
 
-// Safaricom Daraja STK Push callback.
-// Docs: https://developer.safaricom.co.ke/APIs/MpesaExpressSimulate
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  console.log("[M-Pesa callback]", JSON.stringify(body));
-
-  const stkCallback = body?.Body?.stkCallback;
-  if (!stkCallback) {
-    return NextResponse.json({ ResultCode: 0, ResultDesc: "Ignored" });
-  }
-
-  const resultCode = stkCallback.ResultCode;
-  const accountRef = stkCallback.CallbackMetadata?.Item?.find((i: { Name: string }) => i.Name === "AccountReference")?.Value
-    ?? stkCallback.MerchantRequestID;
-
-  const supabase = getServiceSupabase();
-
-  // We stored the order number as AccountReference at STK push time.
-  // Match on order_number if present in the callback, otherwise this needs
-  // manual reconciliation via CheckoutRequestID (logged above).
-  if (accountRef) {
-    await supabase
-      .from("orders")
-      .update({ payment_status: resultCode === 0 ? "paid" : "failed" })
-      .eq("order_number", accountRef);
-  }
-
-  return NextResponse.json({ ResultCode: 0, ResultDesc: "Accepted" });
+// M-Pesa STK push is switched off - all payments are confirmed by staff on WhatsApp.
+// This endpoint used to accept unauthenticated "payment succeeded" callbacks that
+// could mark any order as paid, so it is disabled until M-Pesa is integrated
+// properly (with callback verification).
+export async function POST() {
+  return NextResponse.json({ ResultCode: 1, ResultDesc: "M-Pesa callbacks are disabled" }, { status: 410 });
 }

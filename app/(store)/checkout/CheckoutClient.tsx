@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
 import { formatKES } from "@/lib/utils";
 import { orderDetailsWhatsappLink } from "@/lib/whatsapp";
-
-const DELIVERY_FEE = 300;
+import { DELIVERY_FEE } from "@/lib/shop-config";
 
 export function CheckoutClient() {
   const { items, subtotal, clear } = useCart();
@@ -25,7 +24,10 @@ export function CheckoutClient() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ customer: form, items, deliveryFee: DELIVERY_FEE }),
+        body: JSON.stringify({
+          customer: form,
+          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Checkout failed");
@@ -38,15 +40,16 @@ export function CheckoutClient() {
         name: form.name,
         phone: form.phone,
         address: form.address,
-        items: items.map((i) => ({ name: i.name, price: i.price, quantity: i.quantity })),
-        subtotal,
-        deliveryFee: DELIVERY_FEE,
-        total,
+        // Use the server-confirmed prices and totals.
+        items: data.items,
+        subtotal: data.subtotal,
+        deliveryFee: data.deliveryFee,
+        total: data.total,
       });
 
       clear();
       window.open(waLink, "_blank");
-      router.push(`/order-confirmation/${data.orderId}`);
+      router.push(`/order-confirmation/${data.orderId}?t=${data.token}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {

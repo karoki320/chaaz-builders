@@ -60,3 +60,13 @@ export async function verifySessionToken(token: string | undefined) {
   if (!expires || !sig || Number(expires) < Date.now()) return false;
   return safeEqual(sig, await hmacHex(expires, key));
 }
+
+// Second line of defence inside every admin API route, in case the
+// middleware is ever bypassed or misconfigured.
+export async function adminDenied(req: { cookies: { get(name: string): { value: string } | undefined } }) {
+  if (await verifySessionToken(req.cookies.get(ADMIN_COOKIE)?.value)) return null;
+  return new Response(JSON.stringify({ error: "Unauthorized" }), {
+    status: 401,
+    headers: { "Content-Type": "application/json" },
+  });
+}

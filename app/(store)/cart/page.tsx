@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/contexts/CartContext";
 import { formatKES } from "@/lib/utils";
-
-const DELIVERY_FEE = 300;
+import { DELIVERY_FEE } from "@/lib/shop-config";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, subtotal } = useCart();

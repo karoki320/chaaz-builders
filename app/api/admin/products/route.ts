@@ -1,3 +1,4 @@
+import { adminDenied } from "@/lib/admin-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import { slugify } from "@/lib/utils";
@@ -17,6 +18,8 @@ async function uniqueSlug(base: string) {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = await adminDenied(req);
+  if (denied) return denied;
   const body = await req.json();
   const supabase = getServiceSupabase();
 

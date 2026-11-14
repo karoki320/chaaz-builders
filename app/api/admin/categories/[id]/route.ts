@@ -1,8 +1,11 @@
+import { adminDenied } from "@/lib/admin-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import { slugify } from "@/lib/utils";
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const denied = await adminDenied(req);
+  if (denied) return denied;
   const { id } = await params;
   const body = await req.json();
   const supabase = getServiceSupabase();
@@ -22,6 +25,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const denied = await adminDenied(_req);
+  if (denied) return denied;
   const { id } = await params;
   const supabase = getServiceSupabase();
   // Products referencing this category have category_id set to null automatically

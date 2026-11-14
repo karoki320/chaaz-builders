@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", website: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent) {
@@ -17,7 +17,7 @@ export default function ContactPage() {
       });
       if (!res.ok) throw new Error();
       setStatus("sent");
-      setForm({ name: "", email: "", phone: "", message: "" });
+      setForm({ name: "", email: "", phone: "", message: "", website: "" });
     } catch {
       setStatus("error");
     }
@@ -27,6 +27,17 @@ export default function ContactPage() {
     <div className="max-w-md mx-auto px-4 py-8">
       <h1 className="text-xl font-semibold mb-6">Contact us</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Honeypot for spam bots - hidden from people and screen readers */}
+        <input
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="hidden"
+          value={form.website}
+          onChange={(e) => setForm({ ...form, website: e.target.value })}
+        />
         <input
           required
           placeholder="Name"

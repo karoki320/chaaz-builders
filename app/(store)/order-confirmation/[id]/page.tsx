@@ -3,11 +3,21 @@ import { formatKES } from "@/lib/utils";
 import { orderDetailsWhatsappLink } from "@/lib/whatsapp";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
+import { verifyOrderToken } from "@/lib/order-token";
 
 export const dynamic = "force-dynamic";
 
-export default async function OrderConfirmationPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function OrderConfirmationPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ t?: string }>;
+}) {
   const { id } = await params;
+  const { t } = await searchParams;
+  // Only someone holding the signed link (the customer who placed the order) can view it.
+  if (!/^\d+$/.test(id) || !verifyOrderToken(id, t)) notFound();
   const supabase = getServiceSupabase();
   const { data: order } = await supabase
     .from("orders")

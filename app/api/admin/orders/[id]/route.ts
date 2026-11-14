@@ -1,7 +1,10 @@
+import { adminDenied } from "@/lib/admin-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceSupabase } from "@/lib/supabase/server";
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const denied = await adminDenied(req);
+  if (denied) return denied;
   const { id } = await params;
   const { status } = await req.json();
   const supabase = getServiceSupabase();

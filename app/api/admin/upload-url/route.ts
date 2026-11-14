@@ -1,9 +1,12 @@
+import { adminDenied } from "@/lib/admin-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getServiceSupabase } from "@/lib/supabase/server";
 
 // Issues a one-time signed upload URL for the "media" bucket.
 // Protected by the admin PIN session via middleware (/api/admin/*).
 export async function POST(req: NextRequest) {
+  const denied = await adminDenied(req);
+  if (denied) return denied;
   const { folder, ext } = await req.json().catch(() => ({}));
   if (folder !== "products" && folder !== "blog") {
     return NextResponse.json({ error: "Invalid folder" }, { status: 400 });
